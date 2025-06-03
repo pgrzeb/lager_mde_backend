@@ -78,3 +78,4 @@ C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\obj\Release\net8.0
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\obj\Release\net8.0\lager_mde_backend.pdb
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\obj\Release\net8.0\lager_mde_backend.genruntimeconfig.cache
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\obj\Release\net8.0\ref\lager_mde_backend.dll
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\obj\Release\net8.0\lager_mde_backend.sourcelink.json

@@ -36,7 +36,7 @@ namespace lager_mde_backend.Services
             string von1 = ""; 
             int meng = 0;
 
-            if (artikel == null || lagstamm == null || stapauf == null)
+            if (artikel == null || lagstamm == null || stapauf != null) // stapauf != null bedeutet, dass bereits eine Leermeldung für diesen Artikel existiert
             {
                 if (artikel == null)
                 {
@@ -104,7 +104,7 @@ namespace lager_mde_backend.Services
 
             var response = new LeermeldArtResponse
             {
-                lag_id = lagstamm!.lag_id,
+                lag_id = lagstamm != null ? lagstamm.lag_id : 0,
                 artnr = artikel.artnr,
                 artbez = artikel.artbez,
                 menge = meng,
