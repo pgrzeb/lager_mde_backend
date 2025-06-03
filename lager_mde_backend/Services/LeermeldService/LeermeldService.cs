@@ -36,7 +36,7 @@ namespace lager_mde_backend.Services
             string von1 = ""; 
             int meng = 0;
 
-            if (artikel == null || lagstamm == null || stapauf != null) // stapauf != null bedeutet, dass bereits eine Leermeldung für diesen Artikel existiert
+            if (artikel == null || lagstamm == null || stapauf != null)  // stapauf != null bedeutet, dass bereits eine Leermeldung für diesen Artikel existiert
             {
                 if (artikel == null)
                 {
@@ -49,10 +49,17 @@ namespace lager_mde_backend.Services
                 {
                     if (artikel != null)
                     {
-                        if (artikel.block == 1)
+                        if (artikel.block == 1 && stapauf == null)
                         {
                             von1 = "Bloc";
                             meng = artikel.anzahl_pal;
+                        }
+                        else if (stapauf != null)
+                        {
+                            return new LeermeldArtResponse
+                            {
+                                nachricht = "Leermeldung für diesen Artikel bereits vorhanden!"
+                            };
                         }
                         else
                         {
@@ -97,7 +104,7 @@ namespace lager_mde_backend.Services
 
             string ziel = artikel.lagerplatz;
 
-            if (ziel.Contains("/"))
+            if (ziel.Contains('/'))
             {
                 ziel = ziel.Split('/').Last();
             }
