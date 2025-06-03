@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "WUvSZ6jnc0eO6CEBZMcBB8AG9INpusaYuRXJDf1mFCg=",
+  "Source": "lager_mde_backend",
+  "BasePath": "_content/lager_mde_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
