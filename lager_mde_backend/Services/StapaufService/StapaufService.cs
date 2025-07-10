@@ -67,17 +67,6 @@ namespace lager_mde_backend.Services
             var stapauf = await _context.Stapauf
                 .FirstOrDefaultAsync(x => x.stap_id == request.stap_id);
 
-            if ( request.lagerplatz != "")
-            {
-                var lagstamm = await _context.Lagstamm
-                    .FirstOrDefaultAsync(x => x.lagerplatz == request.lagerplatz && x.sperre == 0);
-
-                if (lagstamm == null)
-                {
-                    throw new Exception("Lagerplatz nicht gefunden oder gesperrt.");
-                }
-            }
-
             if (stapauf == null)
             {
                 throw new Exception("Stapauf nicht gefunden.");
@@ -86,6 +75,7 @@ namespace lager_mde_backend.Services
             stapauf.restmeng = stapauf.menge - request.menge;
             stapauf.status = 2;
             stapauf.benutzer = request.benutzer;
+            stapauf.restmeng = stapauf.menge - request.menge;
             stapauf.staufdat = DateTime.Now.ToString("yyyy.MM.dd");
             stapauf.staufend = DateTime.Now.ToString("HH:mm");
             

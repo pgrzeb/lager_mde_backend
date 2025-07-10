@@ -38,11 +38,13 @@ namespace lager_mde_backend.Services
 
             if ((request!.typ == 4 || request.typ < 3) && request.von != "Bloc" && request.von != "R")
             {
-                
+
                 if (request.restmeng > 0)
                 {
                     lagstamm.kisten = request.restmeng;
-                } else if (request.restmeng != request.menge && request.restmeng < request.menge)
+                    lagstamm.artnr = request.artnr;
+                }
+                else if (request.restmeng != request.menge && request.restmeng < request.menge)
                 {
                     lagstamm.kisten = request.menge - request.restmeng;
                 }

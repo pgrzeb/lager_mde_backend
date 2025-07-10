@@ -5,6 +5,5 @@ public class UpdateStapMengeRequest
 {
     public int stap_id { get; set; }
     public int menge { get; set; }
-    public required string lagerplatz { get; set; }
     public int benutzer { get; set; }
 }
