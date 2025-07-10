@@ -51,12 +51,13 @@ namespace lager_mde_backend.Services
                 artbez = stapauf.artbez,
                 von = stapauf.von,
                 ziel = stapauf.ziel,
-                menge = stapauf.menge, 
+                menge = stapauf.menge,
                 typ = stapauf.typ,
                 status = stapauf.status,
                 durchl = stapauf.durchl,
                 restmeng = (int)stapauf.restmeng,
-                mhd = (int)stapauf.mhd
+                mhd = (int)stapauf.mhd,
+                mhdatum = stapauf.mhdatum ?? DateTime.Parse("2012-01-01")
             };
 
         }
@@ -66,9 +67,20 @@ namespace lager_mde_backend.Services
             var stapauf = await _context.Stapauf
                 .FirstOrDefaultAsync(x => x.stap_id == request.stap_id);
 
+            if ( request.lagerplatz != "")
+            {
+                var lagstamm = await _context.Lagstamm
+                    .FirstOrDefaultAsync(x => x.lagerplatz == request.lagerplatz && x.sperre == 0);
+
+                if (lagstamm == null)
+                {
+                    throw new Exception("Lagerplatz nicht gefunden oder gesperrt.");
+                }
+            }
+
             if (stapauf == null)
             {
-                throw new Exception("Stapauf not found");
+                throw new Exception("Stapauf nicht gefunden.");
             }
 
             stapauf.restmeng = stapauf.menge - request.menge;
@@ -88,36 +100,48 @@ namespace lager_mde_backend.Services
             };
         }
 
-        public async Task<UpdateStapaufResponse> UpdateStapMhdAsync(int stapId, DateTime mhdatum)
+        public async Task<UpdateStapaufResponse> UpdateStapMhdAsync(UpdateStapaufMhdRequest request, DateTime mhdatum)
         {
             var stapauf = await _context.Stapauf
-                .FirstOrDefaultAsync(x => x.stap_id == stapId);
+                .FirstOrDefaultAsync(x => x.stap_id == request.stap_id);
+
+            var lagstamm = await _context.Lagstamm
+                .FirstOrDefaultAsync(x => x.lagerplatz == request.ziel && x.sperre == 0);
 
             if (stapauf == null)
             {
-                
+
                 return new UpdateStapaufResponse
-                { 
-                    nachricht = "Status konnte nicht geändert werden." 
+                {
+                    nachricht = "Status konnte nicht geändert werden."
+                };
+            }else if (lagstamm == null)
+            {
+                return new UpdateStapaufResponse
+                {
+                    nachricht = "Lagerplatz nicht gefunden oder gesperrt."
                 };
             }
-            
-            if (stapauf.mhd == 1 && stapauf.typ != 4){
+
+            if (stapauf.mhd == 1 && stapauf.typ != 4 )
+            {
                 stapauf.mhdatum = mhdatum;
-                stapauf.status = 0;
+                stapauf.status = 2;
+                lagstamm.mhdatum = mhdatum;
                 await _context.SaveChangesAsync();
                 return new UpdateStapaufResponse
-                { 
-                    nachricht ="MHD erfolgreich geändert"
+                {
+                    nachricht = "MHD erfolgreich geändert"
                 };
             }
-            else {
-                stapauf.status = 0; 
+            else
+            {
+                stapauf.status = 2;
                 await _context.SaveChangesAsync();
                 return new UpdateStapaufResponse
-                { 
-                    nachricht ="Status erfolgreich geändert"
-                }; 
+                {
+                    nachricht = "Auftrag erfolgreich abgeschlossen"
+                };
             }
         }
 

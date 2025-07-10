@@ -121,13 +121,12 @@ namespace lager_mde_backend.Services
                 nachricht = " "
             };
 
-            await _context.SaveChangesAsync();
-
             if (lagstamm != null)
             {
                 lagstamm.sperre = 0;
-                await _context.SaveChangesAsync();
             }
+
+            await _context.SaveChangesAsync();
 
             return response;
         }

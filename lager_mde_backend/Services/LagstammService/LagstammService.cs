@@ -34,7 +34,7 @@ namespace lager_mde_backend.Services
             int m = lagstamm.monat;
             int t = lagstamm.tag;
             string z = lagstamm.zeit;
-            DateTime mh = lagstamm.mhdatum;
+            DateTime mh = lagstamm.mhdatum ;
 
             if ((request!.typ == 4 || request.typ < 3) && request.von != "Bloc" && request.von != "R")
             {
@@ -42,7 +42,15 @@ namespace lager_mde_backend.Services
                 if (request.restmeng > 0)
                 {
                     lagstamm.kisten = request.restmeng;
-                } else 
+                } else if (request.restmeng != request.menge && request.restmeng < request.menge)
+                {
+                    lagstamm.kisten = request.menge - request.restmeng;
+                }
+                else if (request.restmeng == 0 && request.menge > 0)
+                {
+                    lagstamm.kisten = request.menge;
+                }
+                else
                 {
                     lagstamm.artnr = 0;
                     lagstamm.kisten = 0;
@@ -50,10 +58,9 @@ namespace lager_mde_backend.Services
                     lagstamm.monat = 0;
                     lagstamm.tag = 0;
                     lagstamm.zeit = "     ";
-                    lagstamm.mhdatum = DateTime.ParseExact("01.01.00", "dd.MM.yy", null);
+                    lagstamm.mhdatum = DateTime.ParseExact("01.01.2012", "yyyy.MM.dd", null);
                 }
 
-                await _context.SaveChangesAsync();
             } 
             
             if ((request.typ == 5 || request.typ == 4 || request.typ == 3) && request.ziel != "Bloc" && request.ziel != "R")
@@ -83,8 +90,6 @@ namespace lager_mde_backend.Services
                     lagstamm.tag = DateTime.Now.Day;
                     lagstamm.zeit = DateTime.Now.ToString("HH:mm");
                 }
-
-                await _context.SaveChangesAsync();
             }
 
             lagstamm.sperre = 0;
@@ -93,7 +98,8 @@ namespace lager_mde_backend.Services
             {
                 return new UpdateLagstammPlatzResponse
                 {
-                    nachricht = "Fehler beim speichern in Lagstamm"
+                    mhdatum = lagstamm.mhdatum,
+                    nachricht = "Keine Änderungen in Lagstamm vorgenommen"
                 };
             }
 
@@ -131,7 +137,6 @@ namespace lager_mde_backend.Services
                 };
             }
           
-
             return new LagstammArtikelResponse
             {
                 artnr = lagstamm.artnr,

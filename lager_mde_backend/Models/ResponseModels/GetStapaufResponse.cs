@@ -12,6 +12,7 @@ public class GetStapaufResponse
     public int typ { get; set; }
     public int status { get; set; }
     public int durchl { get; set; }
-    public int restmeng { get; set; } 
+    public int restmeng { get; set; }
     public int mhd { get; set; }
+    public DateTime mhdatum { get; set; }
 }

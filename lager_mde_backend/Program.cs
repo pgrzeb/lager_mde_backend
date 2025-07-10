@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddSignalR(); //Für ListenerService 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -14,6 +15,7 @@ builder.Services.AddScoped<IPersonalService, PersonalService>();
 builder.Services.AddScoped<IStapaufService, StapaufService>();
 builder.Services.AddScoped<ILagstammService, LagstammService>();
 builder.Services.AddScoped<ILeermeldService, LeermeldService>();
+builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddCors(options =>
@@ -38,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//SignalR Middleware einfügen
+app.MapHub<DataHub>("/dataHub");
 //app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll");

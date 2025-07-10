@@ -40,10 +40,10 @@ public class StapaufController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPut("{stapId}/updateStapMhd")]
-    public async Task<ActionResult<UpdateStapaufResponse>> UpdateStapMhd(int stapId, DateTime mhdatum)
+    [HttpPut("mhdatum")]
+    public async Task<ActionResult<UpdateStapaufResponse>> UpdateStapMhd(UpdateStapaufMhdRequest request, DateTime mhdatum)
     {
-        var response = await _stapaufService.UpdateStapMhdAsync(stapId, mhdatum);
+        var response = await _stapaufService.UpdateStapMhdAsync(request, mhdatum);
 
         return Ok(response);
     }

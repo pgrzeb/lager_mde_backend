@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace lager_mde_backend.Models;
+
 public class UpdateLagstammPlatzRequest
 {
     public int restmeng { get; set; }
