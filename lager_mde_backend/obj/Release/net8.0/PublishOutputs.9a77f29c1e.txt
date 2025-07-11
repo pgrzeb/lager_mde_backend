@@ -35,10 +35,12 @@ C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.Extensions.Logging.Debug.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.Extensions.Logging.EventLog.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.Extensions.Logging.EventSource.dll
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.Extensions.ObjectPool.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.Extensions.Options.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.Extensions.Primitives.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Microsoft.OpenApi.dll
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Newtonsoft.Json.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Npgsql.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Swashbuckle.AspNetCore.Swagger.dll
@@ -47,6 +49,7 @@ C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\Swashbuckl
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\System.Diagnostics.DiagnosticSource.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\System.Diagnostics.EventLog.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\System.IO.Pipelines.dll
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\System.ServiceProcess.ServiceController.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\System.Text.Encodings.Web.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\publish\System.Text.Json.dll

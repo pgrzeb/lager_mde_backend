@@ -105,7 +105,7 @@ namespace lager_mde_backend.Services
                 {
                     nachricht = "Status konnte nicht geändert werden."
                 };
-            }else if (lagstamm == null)
+            }else if (lagstamm == null && stapauf.durchl != 1)
             {
                 return new UpdateStapaufResponse
                 {
@@ -117,7 +117,7 @@ namespace lager_mde_backend.Services
             {
                 stapauf.mhdatum = mhdatum;
                 stapauf.status = 2;
-                lagstamm.mhdatum = mhdatum;
+                lagstamm!.mhdatum = mhdatum;
                 await _context.SaveChangesAsync();
                 return new UpdateStapaufResponse
                 {
