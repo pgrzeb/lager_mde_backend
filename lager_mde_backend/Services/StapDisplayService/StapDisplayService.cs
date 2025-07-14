@@ -13,7 +13,7 @@ namespace lager_mde_backend.Services
             _context = context;
         }
 
-        public async Task<GetKomPlatzResponse> GetKomPlatz(GetKomPlatzRequest request)
+        public async Task<GetKomPlatzResponse> GetKomPlatzAsync(GetKomPlatzRequest request)
         {
             string lagPl = "0";
             
@@ -26,7 +26,7 @@ namespace lager_mde_backend.Services
             return new GetKomPlatzResponse { lagerplatz = lagPl };
         }
         
-        public async Task<GetLagPlatzResponse> GetLagLp(GetLagPlatzRequest request)
+        public async Task<GetLagPlatzResponse> GetLagLpAsync(GetLagPlatzRequest request)
         {
             var lagstamm = await _context.Lagstamm.FirstOrDefaultAsync(x => x.lagerplatz == request.lagerplatz);
 
