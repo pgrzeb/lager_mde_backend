@@ -15,6 +15,7 @@ builder.Services.AddScoped<IPersonalService, PersonalService>();
 builder.Services.AddScoped<IStapaufService, StapaufService>();
 builder.Services.AddScoped<ILagstammService, LagstammService>();
 builder.Services.AddScoped<ILeermeldService, LeermeldService>();
+builder.Services.AddScoped<IStapDisplayService, StapDisplayService>();
 builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
@@ -40,11 +41,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//SignalR Middleware einfügen
-app.MapHub<DataHub>("/dataHub");
-//app.UseHttpsRedirection();
+
 app.UseRouting();
 app.UseCors("AllowAll");
+//SignalR Middleware 
+app.MapHub<DataHub>("/dataHub");
 app.UseAuthorization();
 app.MapControllers();
 

@@ -105,7 +105,7 @@ namespace lager_mde_backend.Services
                 {
                     nachricht = "Status konnte nicht geändert werden."
                 };
-            }else if (lagstamm == null && stapauf.durchl != 1)
+            }else if (lagstamm == null || lagstamm.sperre == 1)
             {
                 return new UpdateStapaufResponse
                 {

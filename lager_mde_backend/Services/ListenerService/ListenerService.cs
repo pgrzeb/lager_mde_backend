@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System.Text.Json;
 
