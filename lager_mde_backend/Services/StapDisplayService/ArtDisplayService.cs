@@ -4,31 +4,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lager_mde_backend.Services
 {
-    public class StapDisplayService : IStapDisplayService
+    public class ArtDisplayService : IArtDisplayService
     {
         private readonly ApplicationDbContext _context;
 
-        public StapDisplayService(ApplicationDbContext context)
+        public ArtDisplayService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<GetKomPlatzResponse> GetKomPlatzAsync(GetKomPlatzRequest request)
+        public async Task<GetKomPlatzResponse> GetKomPlatzAsync(int artnr)
         {
             string lagPl = "0";
             
-            if (request.typ == 3)
-            {
-                var artikel = await _context.Artikel.FirstOrDefaultAsync(x => x.artnr == request.artnr);
-                if (artikel != null) lagPl = artikel.lagerplatz;
-            }
+            var artikel = await _context.Artikel.FirstOrDefaultAsync(x => x.artnr == artnr);
+            if (artikel != null) lagPl = artikel.lagerplatz;
 
             return new GetKomPlatzResponse { lagerplatz = lagPl };
         }
         
-        public async Task<GetLagPlatzResponse> GetLagLpAsync(GetLagPlatzRequest request)
+        public async Task<GetLagPlatzResponse> GetLagPlatzAsync(string lagerplatz)
         {
-            var lagstamm = await _context.Lagstamm.FirstOrDefaultAsync(x => x.lagerplatz == request.lagerplatz);
+            var lagstamm = await _context.Lagstamm.FirstOrDefaultAsync(x => x.lagerplatz == lagerplatz);
 
             if (lagstamm == null)
                 return new GetLagPlatzResponse { gefunden = false, nachricht = "Lagerplatz nicht gefunden!" };
@@ -39,7 +36,7 @@ namespace lager_mde_backend.Services
         }
 
 
-        public async Task<UpdateArtStapDisplayResponse> UpdateArtStapDisplayAsync(UpdateArtStapDisplayRequest request, string lagerplatz)
+        public async Task<UpdateArtStapDisplayResponse> UpdateArtStapDisplayAsync(UpdateArtStapDisplayRequest request)
         {
             int j = 0;
             int m = 0;
@@ -59,8 +56,8 @@ namespace lager_mde_backend.Services
             if (request.durchl == 1 && request.typ == 1)
                 stapauf.restmeng = request.restmeng;
 
-            if (request.typ == 3 && lagerplatz != null)
-                stapauf.ziel = lagerplatz;
+            if (request.typ == 3 && request.lagerplatz != null)
+                stapauf.ziel = request.lagerplatz;
 
             if (request.typ != 6) {
                 stapauf.status = 2;
@@ -94,10 +91,10 @@ namespace lager_mde_backend.Services
 
                     if (request.restmeng > 0)
                     {
-                        if (lagerplatz != null && request.durchl == 1 && request.typ == 1)
+                        if (request.lagerplatz != "0" && request.durchl == 1 && request.typ == 1)
                         {
                             var lagNeu = await _context.Lagstamm
-                                .FirstOrDefaultAsync(x => x.lagerplatz == lagerplatz);
+                                .FirstOrDefaultAsync(x => x.lagerplatz == request.lagerplatz);
                             if (lagNeu == null)
                             {
                                 return new UpdateArtStapDisplayResponse

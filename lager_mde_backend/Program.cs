@@ -15,7 +15,7 @@ builder.Services.AddScoped<IPersonalService, PersonalService>();
 builder.Services.AddScoped<IStapaufService, StapaufService>();
 builder.Services.AddScoped<ILagstammService, LagstammService>();
 builder.Services.AddScoped<ILeermeldService, LeermeldService>();
-builder.Services.AddScoped<IStapDisplayService, StapDisplayService>();
+builder.Services.AddScoped<IArtDisplayService, ArtDisplayService>();
 builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
