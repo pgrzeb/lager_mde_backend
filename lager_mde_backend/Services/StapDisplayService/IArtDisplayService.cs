@@ -5,6 +5,6 @@ namespace lager_mde_backend.Services;
 public interface IArtDisplayService
 {
     Task<GetKomPlatzResponse> GetKomPlatzAsync(int artnr);
-    Task<GetLagPlatzResponse> GetLagPlatzAsync(string lagerplatz);
+    Task<GetLagPlatzIdResponse> GetLagPlatzAsync(string lagerplatz);
     Task<UpdateArtStapDisplayResponse> UpdateArtStapDisplayAsync(UpdateArtStapDisplayRequest request);
 }

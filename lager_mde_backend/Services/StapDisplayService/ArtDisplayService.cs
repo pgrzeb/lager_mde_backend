@@ -23,16 +23,16 @@ namespace lager_mde_backend.Services
             return new GetKomPlatzResponse { lagerplatz = lagPl };
         }
         
-        public async Task<GetLagPlatzResponse> GetLagPlatzAsync(string lagerplatz)
+        public async Task<GetLagPlatzIdResponse> GetLagPlatzAsync(string lagerplatz)
         {
             var lagstamm = await _context.Lagstamm.FirstOrDefaultAsync(x => x.lagerplatz == lagerplatz);
 
             if (lagstamm == null)
-                return new GetLagPlatzResponse { gefunden = false, nachricht = "Lagerplatz nicht gefunden!" };
+                return new GetLagPlatzIdResponse { gefunden = false, nachricht = "Lagerplatz nicht gefunden!" };
             if(lagstamm != null && (lagstamm.artnr != 0 || lagstamm.sperre != 0))
-                return new GetLagPlatzResponse { gefunden = false, nachricht = "Lagerplatz ist besetzt!" };
+                return new GetLagPlatzIdResponse { gefunden = false, nachricht = "Lagerplatz ist besetzt!" };
     
-            return new GetLagPlatzResponse { gefunden = true };
+            return new GetLagPlatzIdResponse { gefunden = true };
         }
 
 
