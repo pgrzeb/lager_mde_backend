@@ -6,6 +6,7 @@ using lager_mde_backend.Services;
 namespace lager_mde_backend.Controllers;
 
 [Route("art")]
+[ApiController]
 public class ArtDisplayController : ControllerBase 
 {
     private readonly IArtDisplayService _artService;
@@ -16,7 +17,7 @@ public class ArtDisplayController : ControllerBase
     }
 
     [HttpGet("komplatz")]
-    public async Task<ActionResult<StapDisplayResponse>> GetKomPlatz(int artnr)
+    public async Task<ActionResult<GetKomPlatzResponse>> GetKomPlatz(int artnr)
     {
         var response = await _artService.GetKomPlatzAsync(artnr);
 
@@ -24,7 +25,7 @@ public class ArtDisplayController : ControllerBase
     }
 
     [HttpGet("{lagerplatz}")]
-    public async Task<ActionResult<GetStapaufResponse>> GetLagPlatz(string lagerplatz)
+    public async Task<ActionResult<GetLagPlatzResponse>> GetLagPlatz(string lagerplatz)
     {
         var response = await _artService.GetLagPlatzAsync(lagerplatz);
 

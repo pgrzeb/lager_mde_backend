@@ -34,7 +34,7 @@ namespace lager_mde_backend.Services
             int m = lagstamm.monat;
             int t = lagstamm.tag;
             string z = lagstamm.zeit;
-            DateTime mh = lagstamm.mhdatum ;
+            DateTime mh = lagstamm.mhdatum ?? DateTime.ParseExact("00.00.0000", "yyy.MM.dd", null);
 
             if ((request!.typ == 4 || request.typ < 3) && request.von != "Bloc" && request.von != "R")
             {
@@ -100,14 +100,14 @@ namespace lager_mde_backend.Services
             {
                 return new UpdateLagstammPlatzResponse
                 {
-                    mhdatum = lagstamm.mhdatum,
+                    mhdatum = lagstamm.mhdatum ?? DateTime.ParseExact("00.00.0000", "yyy.MM.dd", null),
                     nachricht = "Keine Änderungen in Lagstamm vorgenommen"
                 };
             }
 
             return new UpdateLagstammPlatzResponse
             {
-                mhdatum = lagstamm.mhdatum,
+                mhdatum = lagstamm.mhdatum ?? DateTime.ParseExact("00.00.0000", "yyy.MM.dd", null),
                 nachricht = " ",
             };
         }

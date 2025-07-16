@@ -2,7 +2,6 @@ using lager_mde_backend.Data;
 using lager_mde_backend.Entities;
 using lager_mde_backend.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace lager_mde_backend.Services
 {

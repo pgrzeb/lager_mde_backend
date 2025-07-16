@@ -16,6 +16,7 @@ builder.Services.AddScoped<IStapaufService, StapaufService>();
 builder.Services.AddScoped<ILagstammService, LagstammService>();
 builder.Services.AddScoped<ILeermeldService, LeermeldService>();
 builder.Services.AddScoped<IArtDisplayService, ArtDisplayService>();
+builder.Services.AddScoped<IUmlagernService, UmlagernService>();
 builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 

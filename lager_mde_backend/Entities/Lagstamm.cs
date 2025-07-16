@@ -18,5 +18,5 @@ public class Lagstamm {
     public int palsper4 { get; set; }
     public int palsper5 { get; set; }
     public int palsper6 { get; set; }
-    public DateTime mhdatum { get; set; }
+    public DateTime? mhdatum { get; set; }
 }

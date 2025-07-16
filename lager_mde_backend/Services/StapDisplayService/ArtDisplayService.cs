@@ -42,7 +42,7 @@ namespace lager_mde_backend.Services
             int m = 0;
             int t = 0;
             string z = "00:00";
-            DateTime mh = DateTime.ParseExact("01.01.2000", "yyyy.MM.dd", null);
+            DateTime mh = DateTime.SpecifyKind(DateTime.Parse("2000-01-01"), DateTimeKind.Utc);
 
             var stapauf = await _context.Stapauf
                 .FirstOrDefaultAsync(x => x.stap_id == request.stap_id);
@@ -56,13 +56,13 @@ namespace lager_mde_backend.Services
             if (request.durchl == 1 && request.typ == 1)
                 stapauf.restmeng = request.restmeng;
 
-            if (request.typ == 3 && request.lagerplatz != null)
+            if (request.typ == 3 && request.lagerplatz != "0") //wenn Kommissionierplatz als Lagerplatz gewählt
                 stapauf.ziel = request.lagerplatz;
 
             if (request.typ != 6) {
                 stapauf.status = 2;
-                stapauf.benutzer = request.benutzer; // hier benutzer oder 0?
-                stapauf.staufdat = DateTime.Now.ToString("yyyy.MM.dd");
+                stapauf.benutzer = request.benutzer; 
+                stapauf.staufdat = DateTime.Now.ToString("dd.MM.yyyy");
                 stapauf.staufend = DateTime.Now.ToString("HH:mm");
             }
 
@@ -86,8 +86,8 @@ namespace lager_mde_backend.Services
                     m = lagstamm.monat;
                     t = lagstamm.tag;
                     z = lagstamm.zeit;
-                    mh = lagstamm.mhdatum;
-                    stapauf.mhdatum = mh;
+                    mh = lagstamm.mhdatum ?? DateTime.SpecifyKind(DateTime.Parse("2000-01-01"), DateTimeKind.Utc);
+                    stapauf.mhdatum = DateTime.SpecifyKind(mh, DateTimeKind.Utc);
 
                     if (request.restmeng > 0)
                     {
@@ -111,7 +111,7 @@ namespace lager_mde_backend.Services
                             lagNeu.monat = m;
                             lagNeu.tag = t;
                             lagNeu.zeit = z;
-                            lagNeu.mhdatum = mh;
+                            lagNeu.mhdatum = DateTime.SpecifyKind(mh, DateTimeKind.Utc);
 
                             //alter Lagerplatz wird genullt
                             lagstamm.artnr = 0;
@@ -121,12 +121,13 @@ namespace lager_mde_backend.Services
                             lagstamm.monat = 0;
                             lagstamm.tag = 0;
                             lagstamm.zeit = "00:00";
-                            lagstamm.mhdatum = DateTime.ParseExact("01.01.2000", "yyyy.MM.dd", null);
+                            lagstamm.mhdatum = DateTime.SpecifyKind(DateTime.Parse("2000-01-01"), DateTimeKind.Utc);;
 
                             lagNeu.sperre = 0; //Datensatz wieder freigeben
 
                         }
                         else {
+                            lagstamm.artnr = request.artnr;
                             lagstamm.kisten = request.restmeng;
                             lagstamm.sperre = 0;
                         }
@@ -140,11 +141,9 @@ namespace lager_mde_backend.Services
                         lagstamm.monat = 0;
                         lagstamm.tag = 0;
                         lagstamm.zeit = "00:00";
-                        lagstamm.mhdatum = DateTime.ParseExact("01.01.2000", "yyyy.MM.dd", null);
+                        lagstamm.mhdatum = DateTime.SpecifyKind(DateTime.Parse("2000-01-01"), DateTimeKind.Utc);
 
                     }
-
-                    stapauf.mhdatum = lagstamm.mhdatum;
                 }
             }
 
@@ -168,7 +167,7 @@ namespace lager_mde_backend.Services
                         lagstamm.monat = m;
                         lagstamm.tag = t;
                         lagstamm.zeit = z;
-                        lagstamm.mhdatum = mh;
+                        lagstamm.mhdatum = DateTime.SpecifyKind(mh, DateTimeKind.Utc);
                     }
                     else if (request.typ == 5)
                     {
@@ -188,12 +187,13 @@ namespace lager_mde_backend.Services
                     if (request.restmeng > 0)
                     {
                         lagstamm.kisten = request.restmeng;
-                        lagstamm.artnr = request.artnr;
                     }
                     else if (request.restmeng == 0 && request.menge > 0)
                     {
                         lagstamm.kisten = request.menge;
                     }
+                        lagstamm.artnr = request.artnr;
+                        lagstamm.sperre = 0;
                 }
             }
 
