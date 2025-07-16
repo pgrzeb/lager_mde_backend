@@ -29,8 +29,17 @@ namespace lager_mde_backend.Services
 
             if (lagstamm == null)
                 return new GetLagPlatzIdResponse { gefunden = false, nachricht = "Lagerplatz nicht gefunden!" };
-            if(lagstamm != null && (lagstamm.artnr != 0 || lagstamm.sperre != 0))
-                return new GetLagPlatzIdResponse { gefunden = false, nachricht = "Lagerplatz ist besetzt!" };
+            if (lagstamm != null)
+            {
+                if (lagstamm.artnr != 0)
+                {
+                    return new GetLagPlatzIdResponse { gefunden = false, nachricht = "Lagerplatz ist besetzt!" };
+                }
+                else if (lagstamm.sperre != 0)
+                {
+                    return new GetLagPlatzIdResponse { gefunden = false, nachricht = "Lagerplatz ist gesperrt!" };
+                }
+            }   
     
             return new GetLagPlatzIdResponse { gefunden = true };
         }
@@ -42,7 +51,8 @@ namespace lager_mde_backend.Services
             int m = 0;
             int t = 0;
             string z = "00:00";
-            DateTime mh = DateTime.SpecifyKind(DateTime.Parse("2000-01-01"), DateTimeKind.Utc);
+            DateTime defaultDate = DateTime.SpecifyKind(DateTime.Parse("2000-01-01"), DateTimeKind.Utc);
+            DateTime mh = defaultDate;
 
             var stapauf = await _context.Stapauf
                 .FirstOrDefaultAsync(x => x.stap_id == request.stap_id);
@@ -87,7 +97,6 @@ namespace lager_mde_backend.Services
                     t = lagstamm.tag;
                     z = lagstamm.zeit;
                     mh = lagstamm.mhdatum ?? DateTime.SpecifyKind(DateTime.Parse("2000-01-01"), DateTimeKind.Utc);
-                    stapauf.mhdatum = DateTime.SpecifyKind(mh, DateTimeKind.Utc);
 
                     if (request.restmeng > 0)
                     {
@@ -192,8 +201,22 @@ namespace lager_mde_backend.Services
                     {
                         lagstamm.kisten = request.menge;
                     }
-                        lagstamm.artnr = request.artnr;
-                        lagstamm.sperre = 0;
+                    lagstamm.artnr = request.artnr;
+                    lagstamm.sperre = 0;
+                        
+                    if (request.mhdatum != null  && request.typ != 4)
+                    {
+                        var mhdatumToCompare = DateTime.SpecifyKind(request.mhdatum.Value, DateTimeKind.Utc);
+                        if (mhdatumToCompare != defaultDate)
+                        {
+                            lagstamm.mhdatum = DateTime.SpecifyKind(request.mhdatum.Value, DateTimeKind.Utc);
+                            stapauf.mhdatum = DateTime.SpecifyKind(request.mhdatum.Value, DateTimeKind.Utc);
+                        }
+                    }
+                    else
+                    {
+                        stapauf.mhdatum = DateTime.SpecifyKind(mh, DateTimeKind.Utc);
+                    }
                 }
             }
 

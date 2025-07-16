@@ -12,4 +12,5 @@ public class UpdateArtStapDisplayRequest
     public int restmeng { get; set; }
     public int benutzer { get; set; }
     public required string lagerplatz { get; set; }
+    public DateTime? mhdatum { get; set; }
 }

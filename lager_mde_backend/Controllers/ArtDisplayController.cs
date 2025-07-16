@@ -25,7 +25,7 @@ public class ArtDisplayController : ControllerBase
     }
 
     [HttpGet("{lagerplatz}")]
-    public async Task<ActionResult<GetLagPlatzResponse>> GetLagPlatz(string lagerplatz)
+    public async Task<ActionResult<GetLagPlatzIdResponse>> GetLagPlatz(string lagerplatz)
     {
         var response = await _artService.GetLagPlatzAsync(lagerplatz);
 
