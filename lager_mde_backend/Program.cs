@@ -10,10 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IArtikelService, ArtikelService>();
 builder.Services.AddScoped<IPersonalService, PersonalService>();
 builder.Services.AddScoped<IStapaufService, StapaufService>();
-builder.Services.AddScoped<ILagstammService, LagstammService>();
 builder.Services.AddScoped<ILeermeldService, LeermeldService>();
 builder.Services.AddScoped<IArtDisplayService, ArtDisplayService>();
 builder.Services.AddScoped<IUmlagernService, UmlagernService>();
