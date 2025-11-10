@@ -15,6 +15,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Lagstamm> Lagstamm { get; set; }
     public DbSet<Personal> Personal { get; set; }
     public DbSet<Stapauf> Stapauf { get; set; }
+    public DbSet<Inventur> Inventur { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,6 +28,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Lagstamm>().ToTable("lagstamm").HasKey(l => l.lag_id);
         modelBuilder.Entity<Personal>().ToTable("personal").HasKey(p => p.pers_id);
         modelBuilder.Entity<Stapauf>().ToTable("stapauf").HasKey(s => s.stap_id);
+        modelBuilder.Entity<Inventur>().ToTable("inventur").HasKey(i => i.id);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

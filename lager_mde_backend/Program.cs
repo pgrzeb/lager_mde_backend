@@ -15,6 +15,7 @@ builder.Services.AddScoped<IStapaufService, StapaufService>();
 builder.Services.AddScoped<ILeermeldService, LeermeldService>();
 builder.Services.AddScoped<IArtDisplayService, ArtDisplayService>();
 builder.Services.AddScoped<IUmlagernService, UmlagernService>();
+builder.Services.AddScoped<IInventurService, InventurService>();
 builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
@@ -39,7 +40,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseRouting();
 app.UseCors("AllowAll");

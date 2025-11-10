@@ -82,3 +82,15 @@ C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\obj\Release\net8.0
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\Microsoft.Extensions.ObjectPool.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\Newtonsoft.Json.dll
 C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\web.config
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\appsettings.Development.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\appsettings.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\lager_mde_backend.deps.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\lager_mde_backend.runtimeconfig.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\lager_mde_backend.staticwebassets.endpoints.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\publish\web.config
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\publish\appsettings.Development.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\publish\appsettings.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\publish\lager_mde_backend.deps.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\publish\lager_mde_backend.runtimeconfig.json
+C:\Users\app\source\repos\lager_mde_backend\lager_mde_backend\bin\Release\net8.0\publish\publish\lager_mde_backend.staticwebassets.endpoints.json
