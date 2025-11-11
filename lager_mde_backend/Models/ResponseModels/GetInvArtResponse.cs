@@ -4,4 +4,5 @@ public class GetInvArtResponse {
     public int artnr { get; set; }
     public string? artbez { get; set; }
     public string? nachricht { get; set; }
+    public int? menge { get; set; }
 }

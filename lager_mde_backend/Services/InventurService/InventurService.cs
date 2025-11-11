@@ -38,7 +38,8 @@ namespace lager_mde_backend.Services
                 {
                     artnr = artikel.artnr,
                     artbez = artikel.artbez,
-                    nachricht = "Für diesen Artikel existiert bereits ein Eintrag für das heutige Datum."
+                    nachricht = "Für diesen Artikel existiert bereits ein Eintrag für das heutige Datum.",
+                    menge = inventur.menge,
                 };
             }
 
