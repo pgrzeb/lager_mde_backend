@@ -112,5 +112,26 @@ namespace lager_mde_backend.Services
                 nachricht = "Menge konnte nicht angepasst werden.",
             };
         }
+
+        public async Task<List<GetInventurResponse>> GetInventurAsync()
+        {
+            var pruefDat = DateOnly.FromDateTime(DateTime.UtcNow);
+            var eintraege = await _context.Inventur.ToListAsync();
+            List<GetInventurResponse> inventur = [];
+
+            if (eintraege != null)
+            {
+                foreach (var e in eintraege)
+                {
+                    inventur.Add(new GetInventurResponse{ artnr = e.artnr, artbez = e.artbez, menge = e.menge, datum = e.datum, benutzer = e.benutzer});
+                }
+                return inventur;
+            } else
+            {
+                inventur.Add(new GetInventurResponse { artnr = 0, artbez = "", menge = 0, datum = pruefDat, benutzer = 0, nachricht = "Inventureintraege konnetn nicht exportiert werden" });
+                return inventur;
+            }
+            
+        }
     }
 }

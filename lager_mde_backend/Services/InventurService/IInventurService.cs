@@ -7,4 +7,5 @@ public interface IInventurService
     Task<GetInvArtResponse> GetArtAsync(int artnr);
     Task<InventurResponse> SaveInventurAsync(UpdateInventurRequest request);
     Task<InventurResponse> UpdateMengeAsync(UpdateInventurRequest request);
+    Task<List<GetInventurResponse>> GetInventurAsync();
 }

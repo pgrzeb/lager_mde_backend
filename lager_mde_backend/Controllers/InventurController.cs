@@ -39,4 +39,12 @@ public class InventurController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpGet("getInv")]
+    public async Task<ActionResult<InventurResponse>> GetInventur()
+    {
+        var response = await _inventurService.GetInventurAsync();
+
+        return Ok(response);
+    }
 }
