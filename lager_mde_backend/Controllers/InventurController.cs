@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+/*using Microsoft.AspNetCore.Mvc;
 using lager_mde_backend.Models;
 using lager_mde_backend.Services;
 
@@ -47,4 +47,4 @@ public class InventurController : ControllerBase
 
         return Ok(response);
     }
-}
+}*/

@@ -20,14 +20,15 @@ builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
     {
-        options.AddPolicy("AllowAll", builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
+        policy.SetIsOriginAllowed(origin => true) // Erlaubt jede Origin dynamisch
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); // SignalR Handshake funktioniert jetzt
     });
+});
 
 builder.Host.UseWindowsService();
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
