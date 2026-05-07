@@ -2,6 +2,8 @@ using lager_mde_backend.Data;
 using lager_mde_backend.Entities;
 using lager_mde_backend.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text;
 
 namespace lager_mde_backend.Services
 {
@@ -16,7 +18,7 @@ namespace lager_mde_backend.Services
 
         public async Task<GetInvArtResponse> GetArtAsync(int artnr)
         {
-            var artikel = await _context.Artikel
+            /*var artikel = await _context.Artikel
                 .Where(a => a.artnr == artnr)
                 .FirstOrDefaultAsync();
 
@@ -43,16 +45,29 @@ namespace lager_mde_backend.Services
                 };
             }
 
-            return new GetInvArtResponse
-            {
-                artnr = artikel.artnr,
-                artbez = artikel.artbez,
+            return new GetInvArtResponse                  
+            {                                               
+                artnr = artikel.artnr,                     
+                artbez = artikel.artbez,                    
+            }; 
+            */
+            using var client = new HttpClient();
+
+            var response = await client.GetAsync($"http://localhost:8080/inventur/getArt/{artnr}");
+            
+            response.EnsureSuccessStatusCode();
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var content = JsonSerializer.Deserialize<GetInvArtResponse>(jsonString) ?? new GetInvArtResponse                  
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
             };
+            return content;
         }
 
         public async Task<InventurResponse> SaveInventurAsync(UpdateInventurRequest request)
         {
-            var inventur = _context.Inventur;
+            /*var inventur = _context.Inventur;
 
             var inv = new Inventur
             {
@@ -77,13 +92,37 @@ namespace lager_mde_backend.Services
             return new InventurResponse
             {
                 nachricht = "Artikel erfolgreich gespeichert.",
+            };*/
+
+            using var client = new HttpClient();
+            var json = JsonSerializer.Serialize(request);
+
+            // JSON in HTTP-Content packen
+            var content = new StringContent(
+                json,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var response = await client.PostAsync(
+                "http://localhost:8080/inventur/save",
+                content
+            );
+            
+            response.EnsureSuccessStatusCode();
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var returnContent = JsonSerializer.Deserialize<InventurResponse>(jsonString) ?? new  InventurResponse                 
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
             };
+            return returnContent;
 
         } 
         
         public async Task<InventurResponse> UpdateMengeAsync(UpdateInventurRequest request)
         {
-            var pruefDat = DateOnly.FromDateTime(DateTime.UtcNow);
+           /* var pruefDat = DateOnly.FromDateTime(DateTime.UtcNow);
             var inventur = await _context.Inventur.Where(i => i.artnr == request.artnr && i.datum == pruefDat).FirstOrDefaultAsync();
 
             if (inventur != null)
@@ -110,7 +149,31 @@ namespace lager_mde_backend.Services
             return new InventurResponse
             {
                 nachricht = "Menge konnte nicht angepasst werden.",
+            }; */
+
+            using var client = new HttpClient();
+            var json = JsonSerializer.Serialize(request);
+
+            // JSON in HTTP-Content packen
+            var content = new StringContent(
+                json,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var response = await client.PostAsync(
+                "http://localhost:8080/inventur/update",
+                content
+            );
+            
+            response.EnsureSuccessStatusCode();
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var returnContent = JsonSerializer.Deserialize<InventurResponse>(jsonString) ?? new  InventurResponse                 
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
             };
+            return returnContent;
         }
 
         public async Task<List<GetInventurResponse>> GetInventurAsync()
@@ -123,7 +186,7 @@ namespace lager_mde_backend.Services
             {
                 foreach (var e in eintraege)
                 {
-                    inventur.Add(new GetInventurResponse{ artnr = e.artnr, artbez = e.artbez, menge = e.menge, datum = e.datum, benutzer = e.benutzer});
+                    inventur.Add(new GetInventurResponse{ artnr = e.artnr, artbez = e.artbez ?? "", menge = e.menge, datum = e.datum, benutzer = e.benutzer});
                 }
                 return inventur;
             } else

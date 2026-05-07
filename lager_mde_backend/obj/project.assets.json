@@ -3447,11 +3447,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\app\\source\\repos\\lager_mde_backend\\lager_mde_backend\\lager_mde_backend.csproj",
+      "projectUniqueName": "C:\\Users\\app\\Documents\\lager_mde_backend\\lager_mde_backend\\lager_mde_backend.csproj",
       "projectName": "lager_mde_backend",
-      "projectPath": "C:\\Users\\app\\source\\repos\\lager_mde_backend\\lager_mde_backend\\lager_mde_backend.csproj",
+      "projectPath": "C:\\Users\\app\\Documents\\lager_mde_backend\\lager_mde_backend\\lager_mde_backend.csproj",
       "packagesPath": "C:\\Users\\app\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\app\\source\\repos\\lager_mde_backend\\lager_mde_backend\\obj\\",
+      "outputPath": "C:\\Users\\app\\Documents\\lager_mde_backend\\lager_mde_backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\app\\AppData\\Roaming\\NuGet\\NuGet.Config"

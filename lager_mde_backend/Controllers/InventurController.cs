@@ -10,18 +10,26 @@ namespace lager_mde_backend.Controllers;
 public class InventurController : ControllerBase 
 {
     private readonly IInventurService _inventurService;
+    private readonly XbaseQueueService _queue;
 
-    public InventurController(IInventurService inventurService)
+    public InventurController(IInventurService inventurService, XbaseQueueService queue)
     {
         _inventurService = inventurService;
+        _queue = queue;
     }
 
     [HttpGet("getArt")]
     public async Task<ActionResult<GetInvArtResponse>> GetArt(int artnr)
     {
-        var response = await _inventurService.GetArtAsync(artnr);
+        try
+        {
+            var result = await _queue.EnqueueJobAsync(artnr);
+            return Ok(result);
+        } catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
 
-        return Ok(response);
     }
 
     [HttpPut("save")]
@@ -40,11 +48,11 @@ public class InventurController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("getInv")]
+    /* [HttpGet("getInv")]
     public async Task<ActionResult<InventurResponse>> GetInventur()
     {
         var response = await _inventurService.GetInventurAsync();
 
         return Ok(response);
-    }
+    } */
 }
