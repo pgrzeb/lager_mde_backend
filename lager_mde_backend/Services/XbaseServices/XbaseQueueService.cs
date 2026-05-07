@@ -1,5 +1,8 @@
 using System.Threading.Channels;
+using lager_mde_backend.Jobs;
+using lager_mde_backend.Models;
 
+namespace lager_mde_backend.Services;
 public class XbaseQueueService
 {
     private readonly Channel<XbaseRequestJob> _channel;
@@ -10,14 +13,12 @@ public class XbaseQueueService
         _channel = Channel.CreateUnbounded<XbaseRequestJob>();
     }
 
-    public async Task<string> EnqueueJobAsync(int id)
-    {
-        var job = new XbaseRequestJob { ArtikelId = id };
-        await _channel.Writer.WriteAsync(job);
-        
-        // Der Controller wartet hier, bis der Background-Service tcs.SetResult() aufruft
-        return await job.tcs.Task;
-    }
+    public async Task<GetInvArtResponse> EnqueueJobAsync(int id)
+{
+    var job = new XbaseRequestJob { ArtikelId = id };
+    await _channel.Writer.WriteAsync(job);
+    return await job.tcs.Task; // Wartet, bis der Worker das Objekt liefert
+}
 
     public ChannelReader<XbaseRequestJob> Reader => _channel.Reader;
 }

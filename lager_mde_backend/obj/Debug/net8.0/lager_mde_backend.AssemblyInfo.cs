@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lager_mde_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d719da0aca485fd950499e7af9c11f95431c960d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae30cfc3513fa629a37bd3b7aa00cac08bc4139b")]
 [assembly: System.Reflection.AssemblyProductAttribute("lager_mde_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lager_mde_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

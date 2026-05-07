@@ -1,3 +1,7 @@
+using System.Text.Json;
+using lager_mde_backend.Models;
+
+namespace lager_mde_backend.Services;
 public class XbaseWorker : BackgroundService
 {
     private readonly XbaseQueueService _queue;
@@ -10,25 +14,34 @@ public class XbaseWorker : BackgroundService
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        var client = _httpClientFactory.CreateClient();
+{
+    var client = _httpClientFactory.CreateClient();
 
-        // Diese Schleife liest einen Job nach dem anderen aus
-        await foreach (var job in _queue.Reader.ReadAllAsync(stoppingToken))
+    await foreach (var job in _queue.Reader.ReadAllAsync(stoppingToken))
+    {
+        try
         {
-            try
-            {
-                // Hier erfolgt der EINE Aufruf zur Xbase API
-                var response = await client.GetAsync($"https://deine-xbase-api/artikel/{job.ArtikelId}");
-                var content = await response.Content.ReadAsStringAsync();
-                
-                // Ergebnis an den wartenden Controller zurückgeben
-                job.tcs.SetResult(content);
+            // Deine Logik von oben:
+            var response = await client.GetAsync($"http://localhost:8080/inventur/getArt/{job.ArtikelId}");
+            
+            if (!response.IsSuccessStatusCode) {
+                job.tcs.SetResult(new GetInvArtResponse { nachricht = "Xbase Fehler oder nicht gefunden" });
+                continue;
             }
-            catch (Exception ex)
-            {
-                job.tcs.SetException(ex);
-            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var content = JsonSerializer.Deserialize<GetInvArtResponse>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            // Optional: Ein kleiner Delay für Xbase++, falls die API Zeit braucht
+            await Task.Delay(50); 
+
+            // Das fertige Objekt zurück an den Controller geben
+            job.tcs.SetResult(content ?? new GetInvArtResponse { nachricht = "Leere Antwort" });
+        }
+        catch (Exception ex)
+        {
+            job.tcs.SetException(ex);
         }
     }
+}
 }
