@@ -7,6 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR(); //Für ListenerService 
 builder.Services.AddControllers();
+builder.Services.AddSingleton<XbaseQueueService>();
+builder.Services.AddHostedService<XbaseWorker>();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -20,14 +24,15 @@ builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
     {
-        options.AddPolicy("AllowAll", builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
+        policy.SetIsOriginAllowed(origin => true) // Erlaubt jede Origin dynamisch
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); // SignalR Handshake funktioniert jetzt
     });
+});
 
 builder.Host.UseWindowsService();
 builder.WebHost.UseUrls("http://0.0.0.0:5000");

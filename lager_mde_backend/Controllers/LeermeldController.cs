@@ -31,5 +31,4 @@ public class LeermeldController : ControllerBase
 
         return Ok(response);
     }
-
 }
