@@ -53,7 +53,7 @@ namespace lager_mde_backend.Services
             */
             using var client = new HttpClient();
 
-            var response = await client.GetAsync($"http://localhost:8080/inventur/getArt/{artnr}");
+            var response = await client.GetAsync($"http://192.168.125.111:8080/inventur/getArt?artnr={artnr}");
             
             response.EnsureSuccessStatusCode();
 
@@ -105,7 +105,7 @@ namespace lager_mde_backend.Services
             );
 
             var response = await client.PostAsync(
-                "http://localhost:8080/inventur/save",
+                "http://192.168.125.111:8080/inventur/save",
                 content
             );
             
@@ -162,7 +162,7 @@ namespace lager_mde_backend.Services
             );
 
             var response = await client.PostAsync(
-                "http://localhost:8080/inventur/update",
+                "http://192.168.125.111:8080/inventur/update",
                 content
             );
             
