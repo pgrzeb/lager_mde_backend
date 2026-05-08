@@ -21,8 +21,7 @@ public class XbaseWorker : BackgroundService
     {
         try
         {
-            // Deine Logik von oben:
-            var response = await client.GetAsync($"http://localhost:8080/inventur/getArt/{job.ArtikelId}");
+            var response = await client.GetAsync($"http://192.168.125.111:8080/inventur/getArt?artnr={job.ArtikelId}");
             
             if (!response.IsSuccessStatusCode) {
                 job.tcs.SetResult(new GetInvArtResponse { nachricht = "Xbase Fehler oder nicht gefunden" });
