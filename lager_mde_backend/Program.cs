@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR(); //Für ListenerService 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,6 +18,7 @@ builder.Services.AddScoped<ILeermeldService, LeermeldService>();
 builder.Services.AddScoped<IArtDisplayService, ArtDisplayService>();
 builder.Services.AddScoped<IUmlagernService, UmlagernService>();
 builder.Services.AddScoped<IInventurService, InventurService>();
+builder.Services.AddScoped<IXBaseService, XBaseService>();
 builder.Services.AddHostedService<ListenerService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 

@@ -2,16 +2,20 @@ using lager_mde_backend.Data;
 using lager_mde_backend.Entities;
 using lager_mde_backend.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text;
 
 namespace lager_mde_backend.Services
 {
     public class InventurService : IInventurService
     {
         private readonly ApplicationDbContext _context;
+         private readonly IXBaseService _xbase;
 
-        public InventurService(ApplicationDbContext context)
+        public InventurService(ApplicationDbContext context, IXBaseService xbase)
         {
             _context = context;
+            _xbase = xbase;
         }
 
         public async Task<GetInvArtResponse> GetArtAsync(int artnr)
@@ -29,88 +33,92 @@ namespace lager_mde_backend.Services
                 };
             }
 
-            var pruefDat = DateOnly.FromDateTime(DateTime.UtcNow);
-            var inventur = await _context.Inventur.Where(i => i.artnr == artnr && i.datum == pruefDat).FirstOrDefaultAsync();
+            /*using var client = new HttpClient();
 
-            if (inventur != null)
-            {
-                return new GetInvArtResponse
-                {
-                    artnr = artikel.artnr,
-                    artbez = artikel.artbez,
-                    nachricht = "Für diesen Artikel existiert bereits ein Eintrag für das heutige Datum.",
-                    menge = inventur.menge,
-                };
-            }
+            var response = await client.GetAsync($"http://192.168.125.111:8080/inventur/getArt?artnr={artnr}");
+            
+            response.EnsureSuccessStatusCode();
 
-            return new GetInvArtResponse
-            {
-                artnr = artikel.artnr,
-                artbez = artikel.artbez,
+            var jsonString = await response.Content.ReadAsStringAsync(); var content = JsonSerializer.Deserialize<GetInvArtResponse>(jsonString) ?? new GetInvArtResponse                  
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
+            };*/
+
+             var content = await _xbase.GetAsync<GetInvArtResponse>($"http://192.168.125.111:8080/inventur/getArt?artnr={artnr}") ?? new GetInvArtResponse                  
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
             };
+
+            if (content.artbez != null) content.artbez = artikel.artbez;
+
+            return content;
         }
 
         public async Task<InventurResponse> SaveInventurAsync(UpdateInventurRequest request)
         {
-            var inventur = _context.Inventur;
+            //using var client = new HttpClient();
+            /*var json = JsonSerializer.Serialize(request);
 
-            var inv = new Inventur
-            {
-                artnr = request.artnr,
-                artbez = request.artbez,
-                menge = request.menge,
-                datum = DateOnly.FromDateTime(DateTime.UtcNow),
-                benutzer = request.benutzer,
-            };
+            // JSON in HTTP-Content packen
+            var content = new StringContent(
+                json,
+                Encoding.UTF8,
+                "application/json"
+            );
 
-            inventur.Add(inv);
-            var save = await _context.SaveChangesAsync();
-
-            if (save == 0)
-            {
-                return new InventurResponse
-            {
-                nachricht = "Artikel konnte nicht gespeichert werden.",
-            };
-            }
+            var response = await client.PostAsync(
+                "http://192.168.125.111:8080/inventur/save",
+                content
+            );
             
-            return new InventurResponse
-            {
-                nachricht = "Artikel erfolgreich gespeichert.",
-            };
+            response.EnsureSuccessStatusCode();
 
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var returnContent = JsonSerializer.Deserialize<InventurResponse>(jsonString) ?? new  InventurResponse                 
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
+            }; */
+
+            var returnContent = await _xbase.PostAsync<InventurResponse>("http://192.168.125.111:8080/inventur/save",request) ??  new  InventurResponse                 
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
+            }; 
+            
+            return returnContent;
         } 
         
         public async Task<InventurResponse> UpdateMengeAsync(UpdateInventurRequest request)
         {
-            var pruefDat = DateOnly.FromDateTime(DateTime.UtcNow);
-            var inventur = await _context.Inventur.Where(i => i.artnr == request.artnr && i.datum == pruefDat).FirstOrDefaultAsync();
+            /*using var client = new HttpClient();
+            var json = JsonSerializer.Serialize(request);
 
-            if (inventur != null)
-            {
-                inventur.menge = request.menge;
-                inventur.benutzer = request.benutzer;
+            // JSON in HTTP-Content packen
+            var content = new StringContent(
+                json,
+                Encoding.UTF8,
+                "application/json"
+            );
 
-                var save = await _context.SaveChangesAsync();
+            var response = await client.PostAsync(
+                "http://192.168.125.111:8080/inventur/update",
+                content
+            );
+            
+            response.EnsureSuccessStatusCode();
 
-                if (save == 0)
-                {
-                    return new InventurResponse
-                    {
-                        nachricht = "Menge konnte nicht angepasst werden.",
-                    };
-                }
-
-                return new InventurResponse
-                {
-                    nachricht = "Menge erfolgreich angepasst."
-                };
-            }
-
-            return new InventurResponse
-            {
-                nachricht = "Menge konnte nicht angepasst werden.",
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var returnContent = JsonSerializer.Deserialize<InventurResponse>(jsonString) ?? new  InventurResponse                 
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
             };
+            return returnContent; */
+
+             var returnContent = await _xbase.PostAsync<InventurResponse>("http://192.168.125.111:8080/inventur/update",request) ??  new  InventurResponse                 
+            {                                               
+                nachricht = "Etwas ist schief gelaufen."                    
+            }; 
+            
+            return returnContent;
         }
 
         public async Task<List<GetInventurResponse>> GetInventurAsync()
@@ -123,15 +131,14 @@ namespace lager_mde_backend.Services
             {
                 foreach (var e in eintraege)
                 {
-                    inventur.Add(new GetInventurResponse{ artnr = e.artnr, artbez = e.artbez, menge = e.menge, datum = e.datum, benutzer = e.benutzer});
+                    inventur.Add(new GetInventurResponse{ artnr = e.artnr, artbez = e.artbez ?? "", menge = e.menge, datum = e.datum, benutzer = e.benutzer});
                 }
                 return inventur;
             } else
             {
-                inventur.Add(new GetInventurResponse { artnr = 0, artbez = "", menge = 0, datum = pruefDat, benutzer = 0, nachricht = "Inventureintraege konnetn nicht exportiert werden" });
+                inventur.Add(new GetInventurResponse { artnr = 0, artbez = "", menge = 0, datum = pruefDat, benutzer = 0, nachricht = "Inventureintraege konnten nicht exportiert werden" });
                 return inventur;
             }
-            
         }
     }
 }
