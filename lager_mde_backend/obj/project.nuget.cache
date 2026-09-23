@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gpsCD+Ky+WI=",
+  "dgSpecHash": "Ylgu6m8lN4c=",
   "success": true,
-  "projectFilePath": "c:\\Users\\app\\source\\repos\\lager_mde_backend\\lager_mde_backend\\lager_mde_backend.csproj",
+  "projectFilePath": "C:\\Users\\app\\source\\repos\\lager_mde_backend\\lager_mde_backend\\lager_mde_backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\app\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.0\\microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
     "C:\\Users\\app\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.3.0\\microsoft.aspnetcore.authorization.2.3.0.nupkg.sha512",

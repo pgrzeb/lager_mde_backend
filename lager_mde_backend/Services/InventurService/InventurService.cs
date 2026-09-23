@@ -49,7 +49,7 @@ namespace lager_mde_backend.Services
                 nachricht = "Etwas ist schief gelaufen."                    
             };
 
-            if (content.artbez != null) content.artbez = artikel.artbez;
+            if (content.artbez == "") content.artbez = artikel.artbez;
 
             return content;
         }
